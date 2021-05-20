@@ -33,6 +33,9 @@ void EXTI_Config()		// EXTERNAL INTERRUPT için konfigürasyon ayarlarý -->
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE); 	// External Interrupt için APB2 hattýný aktif ettik.
 
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, GPIO_PinSource0);	// External interrupt iþlemini hangi port ve pinde
+	//	yapacaðýmýzý seçiyoruz. ( A portu 0.pin ) --> EXTI_Port.....A, GPIO_Pin....0
+
 	EXTI_InitStruct.EXTI_LineCmd = ENABLE;				// Line hattýný aktif ettik.
 	EXTI_InitStruct.EXTI_Mode = EXTI_Mode_Interrupt;	// Kesme iþlemi yapacaðýmýzdan Interrupt modunu seçiyoruz.
 	EXTI_InitStruct.EXTI_Line = EXTI_Line0;				// Butonu harici kesme olarak kullanacaðýmýzdan Line0 yaptýk.
