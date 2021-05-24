@@ -1,0 +1,6 @@
+main.c:59:6:Read_ADC	8	static
+main.c:99:5:main	8	static
+main.c:144:6:SystemClock_Config	88	static
+main.c:188:13:MX_ADC1_Init	24	static
+main.c:238:13:MX_GPIO_Init	40	static
+main.c:267:6:Error_Handler	4	static
