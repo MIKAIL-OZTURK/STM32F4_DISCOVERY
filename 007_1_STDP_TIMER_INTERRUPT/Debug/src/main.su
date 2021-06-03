@@ -1,0 +1,7 @@
+main.c:8:6:GPIO_Config	8	static
+main.c:20:6:TIM_Config	8	static
+main.c:35:6:NVIC_Config	8	static
+main.c:45:6:TIM3_IRQHandler	8	static
+main.c:52:5:main	8	static
+main.c:65:6:EVAL_AUDIO_TransferComplete_CallBack	16	static
+main.c:71:10:EVAL_AUDIO_GetSampleCallBack	4	static
