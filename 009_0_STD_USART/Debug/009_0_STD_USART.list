@@ -1898,32 +1898,35 @@ void USART_Config()
 {
  8000b60:	b580      	push	{r7, lr}
  8000b62:	af00      	add	r7, sp, #0
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);		// USART2 için clock hattýný aktif ettik.
  8000b64:	2101      	movs	r1, #1
  8000b66:	f44f 3000 	mov.w	r0, #131072	; 0x20000
  8000b6a:	f7ff fddf 	bl	800072c <RCC_APB1PeriphClockCmd>
 
-	USART_InitStruct.USART_BaudRate = 9600;
+	USART_InitStruct.USART_BaudRate = 9600;		// BaudRate ->  Veri gönderme hýzýdýr. Aldýðýmýýz ve gönderdiðimiz veri hýzlarý eþit olmalýdýr.
  8000b6e:	4b0e      	ldr	r3, [pc, #56]	; (8000ba8 <USART_Config+0x48>)
  8000b70:	f44f 5216 	mov.w	r2, #9600	; 0x2580
  8000b74:	601a      	str	r2, [r3, #0]
-	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStruct.USART_HardwareFlowControl = USART_HardwareFlowControl_None; // Donaným akýþ kontrolünü belirtir.Akýþ Kontrolü,
  8000b76:	4b0c      	ldr	r3, [pc, #48]	; (8000ba8 <USART_Config+0x48>)
  8000b78:	2200      	movs	r2, #0
  8000b7a:	819a      	strh	r2, [r3, #12]
-	USART_InitStruct.USART_Mode = USART_Mode_Tx;
+	//	yavaþ ve hýzlý cihazlarýn veri kaybetme riski olmadan USART üzerinden birbirleriyle iletiþim kurmasý için bir yöntemdir.Akýþ kontrolü, vericiye iletimi
+	//	durdurmasý (duraklatma) veya baþlatmasý (devam ettirmesi) gerektiðini bildirmek için ekstra sinyal saðlar. Donaným akýþ kontrolü ise kablolardaki mantýk
+	//	seviyesinin, vericinin veri göndermeye devam edip etmeyeceðini veya duracaðýný belirlediði ekstra kablolar kullanýr.
+	USART_InitStruct.USART_Mode = USART_Mode_Tx; 	// USART modülünü hangi modda kullanacaðýmýzý seçiyoruz.Tx - Mesaj Gönderme (PC->MCU) ~ Rx - Mesaj Alma (MCU->PC)
  8000b7c:	4b0a      	ldr	r3, [pc, #40]	; (8000ba8 <USART_Config+0x48>)
  8000b7e:	2208      	movs	r2, #8
  8000b80:	815a      	strh	r2, [r3, #10]
-	USART_InitStruct.USART_Parity = USART_Parity_No;
+	USART_InitStruct.USART_Parity = USART_Parity_No; // Veri bitlerinde herhangi bir hata olup olmadýðýný alýcý cihaza bildirir.
  8000b82:	4b09      	ldr	r3, [pc, #36]	; (8000ba8 <USART_Config+0x48>)
  8000b84:	2200      	movs	r2, #0
  8000b86:	811a      	strh	r2, [r3, #8]
-	USART_InitStruct.USART_StopBits = USART_StopBits_1;
+	USART_InitStruct.USART_StopBits = USART_StopBits_1;	// Haberleþmenin sonlanmasý için gereken 'Stop Biti'nin deðeri kaç bit olsun? 1 Bit olarak ayarladýk.
  8000b88:	4b07      	ldr	r3, [pc, #28]	; (8000ba8 <USART_Config+0x48>)
  8000b8a:	2200      	movs	r2, #0
  8000b8c:	80da      	strh	r2, [r3, #6]
-	USART_InitStruct.USART_WordLength = USART_WordLength_8b;
+	USART_InitStruct.USART_WordLength = USART_WordLength_8b; // Veri keliLme uzunluðunu belirtiriz.
  8000b8e:	4b06      	ldr	r3, [pc, #24]	; (8000ba8 <USART_Config+0x48>)
  8000b90:	2200      	movs	r2, #0
  8000b92:	809a      	strh	r2, [r3, #4]
@@ -1933,7 +1936,7 @@ void USART_Config()
  8000b96:	4805      	ldr	r0, [pc, #20]	; (8000bac <USART_Config+0x4c>)
  8000b98:	f7ff fe14 	bl	80007c4 <USART_Init>
 
-	USART_Cmd(USART2, ENABLE);
+	USART_Cmd(USART2, ENABLE);		// USART bir çevresel birimi olduðundan aktif ediyoruz.
  8000b9c:	2101      	movs	r1, #1
  8000b9e:	4803      	ldr	r0, [pc, #12]	; (8000bac <USART_Config+0x4c>)
  8000ba0:	f7ff feca 	bl	8000938 <USART_Cmd>
@@ -1945,7 +1948,7 @@ void USART_Config()
 
 08000bb0 <USART_Puts>:
 
-void USART_Puts(USART_TypeDef* USARTx, volatile char *s)
+void USART_Puts(USART_TypeDef* USARTx, volatile char *s)		// USART Mesaj Gönderme Fonksiyonu
 {
  8000bb0:	b580      	push	{r7, lr}
  8000bb2:	b082      	sub	sp, #8
@@ -2013,7 +2016,7 @@ int main(void)
  8000c10:	60a2      	str	r2, [r4, #8]
  8000c12:	781b      	ldrb	r3, [r3, #0]
  8000c14:	7323      	strb	r3, [r4, #12]
-	  USART_Puts(USART2, str);
+	  USART_Puts(USART2, str);			// "Hello World" --> MCU
  8000c16:	4904      	ldr	r1, [pc, #16]	; (8000c28 <main+0x30>)
  8000c18:	4805      	ldr	r0, [pc, #20]	; (8000c30 <main+0x38>)
  8000c1a:	f7ff ffc9 	bl	8000bb0 <USART_Puts>
